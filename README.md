@@ -1,7 +1,1 @@
-# Redux Basic
-- part 1 : 왜 리덕스 인가?
-- part 2 : Install Redux
-- part 3 : initial state, reducer, useSelector
-- part 4 : action, useDispatch
-- part 5 : action creator
-- part 6 : payload
+### 리액트 학습자료 09.Redux part 6 [퀴즈 답]
