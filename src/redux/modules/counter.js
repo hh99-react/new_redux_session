@@ -1,52 +1,45 @@
-const PLUS_ONE = "PLUS_ONE";
-const MINUS_ONE = "MINUS_ONE";
-const PLUS_NUMBER = "PLUS_NUMBER";
+// Action Value
+const ADD_NUMBER = "ADD_NUMBER";
 
-export function plusOne() {
-  return {
-    type: PLUS_ONE,
-  };
-}
-export function minusOne() {
-  return {
-    type: MINUS_ONE,
-  };
-}
+// [퀴즈 답]
+const MINUS_NUMBER = "MINUS_NUMBER";
 
-export function plusNumber(payload) {
+// Action Creator
+export const addNumber = (payload) => {
   return {
-    type: PLUS_NUMBER,
-    payload: payload,
+    type: ADD_NUMBER,
+    payload,
   };
-}
+};
 
+export const minusNumber = (payload) => {
+  return {
+    type: MINUS_NUMBER,
+    payload,
+  };
+};
+
+// Initial State
 const initialState = {
   number: 0,
 };
 
+// Reducer
 const counter = (state = initialState, action) => {
   switch (action.type) {
-    case PLUS_ONE:
+    case ADD_NUMBER:
       return {
-        ...state,
-        number: state.number + 1,
-      };
-
-    case MINUS_ONE:
-      return {
-        ...state,
-        number: state.number - 1,
-      };
-
-    case PLUS_NUMBER:
-      return {
-        ...state,
         number: state.number + action.payload,
       };
-
+    // [퀴즈 답]
+    case MINUS_NUMBER:
+      return {
+        number: state.number - action.payload,
+      };
     default:
       return state;
   }
 };
 
+// export default reducer
 export default counter;
