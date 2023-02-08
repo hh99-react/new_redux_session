@@ -1,34 +1,57 @@
-import React from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addNumber, minusNumber } from "./redux/modules/counter";
+import { useSelector, useDispatch } from "react-redux";
+import { addTodo, deleteTodo } from "./redux/modules/todos";
 
 const App = () => {
   const dispatch = useDispatch();
-  const [number, setNumber] = useState(0);
-  const globalNumber = useSelector((state) => state.counter.number);
+  const todos = useSelector(({ todos }) => todos.todos);
 
-  const onChangeHandler = (evnet) => {
-    const { value } = evnet.target;
-    setNumber(+value);
-  };
-
-  const onClickAddNumberHandler = () => {
-    dispatch(addNumber(number));
-  };
-
-  // [퀴즈 답]
-  const onClickMinusNumberHandler = () => {
-    dispatch(minusNumber(number));
-  };
+  const [todo, setTodo] = useState({
+    id: "",
+    title: "",
+  });
 
   return (
-    <div>
-      <div>{globalNumber}</div>
-      <input type="number" onChange={onChangeHandler} />
-      <button onClick={onClickAddNumberHandler}>더하기</button>
-      <button onClick={onClickMinusNumberHandler}>빼기</button>
-    </div>
+    <>
+      <div>
+        <label>제목</label>
+        <input
+          type="text"
+          value={todo.title}
+          onChange={({ target: { value: title } }) => {
+            setTodo((pre) => ({
+              ...pre,
+              id: new Date().toString(),
+              title,
+            }));
+          }}
+        />
+        <button
+          onClick={() => {
+            dispatch(addTodo(todo));
+          }}
+        >
+          Todo 추가하기
+        </button>
+
+        <br />
+        <br />
+        <h1>Todos!</h1>
+        {todos.map((todo) => {
+          return (
+            <div
+              key={todo.id}
+              style={{ display: "flex", alignItems: "center", gap: "15px" }}
+            >
+              <div key={todo.id}>{todo.title}</div>
+              <button onClick={() => dispatch(deleteTodo(todo.id))}>
+                삭제
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
